@@ -1,9 +1,14 @@
+import os
 import pandas as pd
+import streamlit as st
 
-df = pd.read_csv("commandes.csv")
+# Trouver le chemin du dossier où se trouve le script actuel
+base_path = os.path.dirname(__file__)
+file_path = os.path.join(base_path, "commandes.csv")
 
-# Modèles les plus vendus
-print(df["Modele"].value_counts())
-
-# Tailles les plus demandées
-print(df["Taille"].value_counts())
+try:
+    df = pd.read_csv(file_path)
+except FileNotFoundError:
+    st.error("Le fichier 'commandes.csv' est introuvable. Vérifiez qu'il est bien sur GitHub !")
+    # Créer un DataFrame vide pour éviter que l'app ne plante totalement
+    df = pd.DataFrame()
