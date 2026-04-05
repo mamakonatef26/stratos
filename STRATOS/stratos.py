@@ -1,11 +1,16 @@
 import streamlit as st
 import pandas as pd
 import os
+from PIL import Image
 
 st.set_page_config(page_title="STRATOS", layout="wide")
 
-base_path = os.path.dirname(__file__)
+base_path = os.path.dirname("C:\Users\Lenovo\Desktop\STRATOS\LOGO.jpeg")
+logo_path = os.path.join(base_path, "LOGO.JPEG")
 file_path = os.path.join(base_path, "commandes.csv")
+
+if os.path.exists(logo_path):
+    st.sidebar.image(logo_path, width=200)
 
 if not os.path.exists(file_path):
     df_empty = pd.DataFrame(columns=["Nom", "Modele", "Mesures", "Contact"])
@@ -23,7 +28,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Nouvelle Commande")
-    with st.form("form_commande"):
+    with st.form("form_commande", clear_on_submit=True):
         nom = st.text_input("Nom Complet")
         modele = st.selectbox("Modèle", ["Elite Stratos", "Signature Or", "Tradition Business"])
         mesures = st.text_area("Mesures (Épaules, Cou, Poitrine...)")
@@ -36,6 +41,7 @@ with col1:
             df = pd.concat([df, new_data], ignore_index=True)
             df.to_csv(file_path, index=False)
             st.success("Commande enregistrée avec succès.")
+            st.rerun()
 
 with col2:
     st.subheader("Tableau de Bord")
