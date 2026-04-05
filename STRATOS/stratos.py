@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
 import os
-from PIL import Image
 
 st.set_page_config(page_title="STRATOS", layout="wide")
 
 base_path = os.path.dirname(__file__)
-logo_path = os.path.join(base_path, "LOGO.jpeg")
+logo_path = os.path.join(base_path, "LOGO.JPEG")
 file_path = os.path.join(base_path, "commandes.csv")
 
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=200)
+else:
+    st.sidebar.error(f"Fichier non trouvé : LOGO.JPEG")
 
 if not os.path.exists(file_path):
     df_empty = pd.DataFrame(columns=["Nom", "Modele", "Mesures", "Contact"])
@@ -43,8 +44,6 @@ with col1:
                 df.to_csv(file_path, index=False)
                 st.success("Commande enregistrée avec succès.")
                 st.rerun()
-            else:
-                st.error("Veuillez remplir au moins le nom et le contact.")
 
 with col2:
     st.subheader("Tableau de Bord")
