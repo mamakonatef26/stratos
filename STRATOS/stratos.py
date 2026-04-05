@@ -4,7 +4,7 @@ import os
 
 st.set_page_config(page_title="STRATOS", layout="wide")
 
-base_path = os.path.dirname(__file__)
+base_path = os.path.dirname(LOGO.JPEG)
 logo_path = os.path.join(base_path, "LOGO.JPEG")
 file_path = os.path.join(base_path, "commandes.csv")
 
